@@ -66,7 +66,7 @@ async function start() {
         res.json(product);
     });
 
-    app.get('/:path(.*)', (req, res) => {
+    app.get('/:anything', (req, res) => {
         res.sendFile(path.join(__dirname, '../dist/index.html'));
     });
 

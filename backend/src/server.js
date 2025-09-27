@@ -15,7 +15,10 @@ async function start() {
     const app = express();
     app.use(express.json());
     app.use('/images', express.static(path.join(__dirname, '..', 'assets')));
-    console.log("Static dir:", path.join(__dirname, "assets"));
+    app.use(express.static(
+        path.resolve(__dirname, '../dist'),
+        { maxAge: "1y", etag: false },
+    ));
 
     app.get('/api/products', async (req, res) => {
         const products = await db.collection('products').find().toArray();
@@ -61,6 +64,10 @@ async function start() {
         const id = req.params.productId
         const product = await db.collection('products').findOne({ id });
         res.json(product);
+    });
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../dist/index.html'));
     });
 
     app.listen(8000, () => {

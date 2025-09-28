@@ -5,7 +5,7 @@ import path from 'path';
 async function start() {
 
     console.log("Connecting to MongoDB...");
-    const mongoDbUrl = process.env.mongoDbUrl;
+    const mongoDbUrl = process.env.MONGODB_URL;
     const mongoClient = new MongoClient(mongoDbUrl);
     await mongoClient.connect();
     console.log("Connected to MongoDB!");
